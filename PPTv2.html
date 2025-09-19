@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delegate Sales Plan Slide</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 20px;
+  }
+  .slide {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #1a237e;
+    margin-bottom: 50px;
+    font-size: 32px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+  .card {
+    background-color: #e8eaf6;
+    border-radius: 15px;
+    padding: 25px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+  .icon {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #3949ab;
+  }
+  .card h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #1a237e;
+  }
+  .card p {
+    font-size: 14px;
+    color: #212121;
+    line-height: 1.5;
+  }
+  .highlight {
+    color: #3949ab;
+    font-weight: 600;
+  }
+  #saveBtn {
+    display: none; /* Save button hidden */
+  }
+
+  @media (max-width: 1000px) {
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 700px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>Delegate Sales Plan Overview</h1>
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon" contenteditable="true">📝</div>
+      <h2 contenteditable="true">Registration Made Live</h2>
+      <p contenteditable="true">
+        Opened early registration to <span class="highlight">maximize delegate reach</span> and ensure timely communication with attendees.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon" contenteditable="true">👥</div>
+      <h2 contenteditable="true">Repeat Attendee List Compiled</h2>
+      <p contenteditable="true">
+        Identified loyal delegates to enable <span class="highlight">targeted marketing</span> and a personalized approach via emails, WhatsApp, and calls.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon" contenteditable="true">🏥</div>
+      <h2 contenteditable="true">Hospitals & Doctors Identified</h2>
+      <p contenteditable="true">
+        Mapped hospitals and doctors to find gaps, <span class="highlight">expand the database</span> and engage delegates who have not yet attended.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon" contenteditable="true">📚</div>
+      <h2 contenteditable="true">Abstract Submissions Live</h2>
+      <p contenteditable="true">
+        Launched submission portal to give authors more time, <span class="highlight">increase submissions</span>, and attract high-quality abstracts.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon" contenteditable="true">💰</div>
+      <h2 contenteditable="true">Offer Discounts to Past Attendees</h2>
+      <p contenteditable="true">
+        Encouraged conversion to paid registrations by offering <span class="highlight">special pricing</span> for previous attendees (paid and complimentary).
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon" contenteditable="true">🤝</div>
+      <h2 contenteditable="true">Encourage Sponsor Engagement</h2>
+      <p contenteditable="true">
+        Assisted delegates in approaching sponsors early to <span class="highlight">streamline approvals</span> and increase paid registration rates.
+      </p>
+    </div>
+
+  </div>
+
+  <button id="saveBtn">Save Changes</button>
+</div>
+
+<script>
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const cards = document.querySelectorAll('.card');
+  const updatedData = [];
+
+  cards.forEach(card => {
+    updatedData.push({
+      icon: card.querySelector('.icon').innerText,
+      title: card.querySelector('h2').innerText,
+      description: card.querySelector('p').innerText
+    });
+  });
+
+  // Send updated data to backend
+  fetch('/api/update-cards', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedData)
+  })
+  .then(res => res.json())
+  .then(data => console.log('Changes saved successfully!', data))
+  .catch(err => console.error('Error saving data:', err));
+});
+</script>
+
+</body>
+</html>
